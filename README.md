@@ -3,3 +3,5 @@
 Pequeno exercício para prática, consistindo em permitir ao usuário criar uma Lista de Tarefas, adicionando tarefas, ou desfazendo/refazendo a última tarefa adicionada à lista.
 
 O usuário também pode optar por limpar o temrinal, para melhor visualização.
+
+O programa também irá criar um arquivo JSON para servir como base de dados, e salvar todo o conteúdo da Lista.
