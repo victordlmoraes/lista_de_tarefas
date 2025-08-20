@@ -39,7 +39,7 @@ def listar_tarefas():
     print()
     print('Lista de Tarefas:')
     for tarefa in tarefas:
-        print (tarefa)
+        print('-',tarefa)
     print()
 
 # CÓDIGO PRINCIPAL
