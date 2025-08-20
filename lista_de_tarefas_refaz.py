@@ -11,10 +11,7 @@
 # refazer = todo['fazer café', 'caminhar']
 
 import os
-
-# DECLARANDO AS VARIÁVEIS PRINCIPAIS
-tarefas = [] # lista de tarefas principal para cadastro pelo usuário
-tarefas_refazer = [] # lista de tarefas secundária, idêntica à principal, para uso posterior
+import json
 
 # DEFINIÇÃO DAS FUNÇÕES DO EXERCÍCIO
 
@@ -27,7 +24,7 @@ def adicionar_tarefa(tarefa):
     print()
     tarefas.append(tarefa)
     tarefas_refazer.append(tarefa)
-    print('Tarefa adicionada!')
+    print(f'"{tarefa}" adicionada à lista!')
     print()
 
 # Desfazer a última tarefa inserida
@@ -39,8 +36,34 @@ def listar_tarefas():
     print()
     print('Lista de Tarefas:')
     for tarefa in tarefas:
-        print('-',tarefa)
+        print('\t-',tarefa)
     print()
+
+# Funções para leitura e salvamento da lista em um arquivo .json
+
+# Leitura, e caso não tenha, criação do arquivo json para salvamento do conteúdo da lista
+def ler(tarefas, caminho_arquivo):
+    dados = []
+    try:
+        with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
+            dados = json.load(arquivo)
+    except FileNotFoundError:
+        print('O arquivo não existe.')
+        salvar(tarefas, caminho_arquivo)
+    return dados
+
+# Salvamento do conteúdo
+def salvar(tarefas, caminho_arquivo):
+    dados = tarefas
+    with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
+        dados = json.dump(tarefas, arquivo, indent=2, ensure_ascii=False)
+    return dados
+
+arquivo_url = 'db_lista_de_tarefas.json'
+
+# DECLARANDO AS VARIÁVEIS PRINCIPAIS
+tarefas = ler([], arquivo_url) # lista de tarefas principal para cadastro pelo usuário
+tarefas_refazer = [] # lista de tarefas secundária, idêntica à principal, para uso posterior
 
 # CÓDIGO PRINCIPAL
 while True:
@@ -93,5 +116,7 @@ while True:
     # Adição da tarefa às listas
     else:
         adicionar_tarefa(user_input)
+
+    salvar(tarefas, arquivo_url)
 # Mensagem de encerramento
 print('Programa FINALIZADO')
